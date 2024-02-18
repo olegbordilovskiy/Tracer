@@ -11,7 +11,7 @@ namespace Tracer.Interfaces
         void StartTrace();
    
         void StopTrace();
-    
-        //TraceResult GetTraceResult();
+
+        TraceResult GetTraceResult();
     }
 }

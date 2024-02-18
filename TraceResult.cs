@@ -6,10 +6,7 @@ using System.Threading.Tasks;
 
 namespace Tracer
 {
-    internal class TraceResult
+    public class TraceResult
     {
-        public string? MethodName { get; set; }
-        public string? ClassName { get; set; }
-        public string? ExecutionTime { get; set; }
     }
 }

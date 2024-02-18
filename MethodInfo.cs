@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Tracer
 {
-    internal class MethodInfo
+    public class MethodInfo
     {
         public string? MethodName { get; set; }
         public string? ClassName { get; set; }
-        public string? ExecutionTime { get; set; }
+        public TimeSpan ExecutionTime { get; set; }
         public Stopwatch Stopwatch { get; set; }
 
         public List<MethodInfo> Methods { get; set; }

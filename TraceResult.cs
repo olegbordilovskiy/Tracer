@@ -8,5 +8,10 @@ namespace Tracer
 {
     public class TraceResult
     {
+        List<ThreadInfo> Threads { get; set; }
+        public TraceResult(List<ThreadInfo> threadsInfo) 
+        {
+            Threads = threadsInfo;
+        }
     }
 }

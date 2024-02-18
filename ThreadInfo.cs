@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Tracer
 {
-    internal class ThreadInfo
+    public class ThreadInfo
     {
         public int Id {  get; set; }
         public string? Time { get; set; }
@@ -15,12 +15,23 @@ namespace Tracer
 
         public List<MethodInfo> Methods;
         public Stack<MethodInfo> Stack;
-        public ThreadInfo(int id) 
+
+        public ThreadInfo(int id)
         {
             Id = id;
+            Time = "";
             Methods = new List<MethodInfo>();
             Stack = new Stack<MethodInfo>();
 
         }
+        public ThreadInfo(int id, string time) 
+        {
+            Id = id;
+            Time = time;
+            Methods = new List<MethodInfo>();
+            Stack = new Stack<MethodInfo>();
+
+        }
+
     }
 }

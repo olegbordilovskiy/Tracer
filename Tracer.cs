@@ -12,23 +12,20 @@ namespace Tracer
     internal class Tracer : ITracer
     {
         private List<ThreadInfo> Threads;
-        //private Stopwatch Stopwatch { get; set; }
-        //private TimeSpan ElapsedTime { get; set; }
-        //private TraceResult TraceResult { get; set; }
+        
         public Tracer()
         {
             Threads = new List<ThreadInfo>();
         }
         public void StartTrace()
         {
-
             int threadId = Thread.CurrentThread.ManagedThreadId;
 
             var threadInfo = Threads.FirstOrDefault(t => t.Id == threadId);
 
             if (threadInfo == null)
             {
-                var newThread = new ThreadInfo (threadId);
+                var newThread = new ThreadInfo(threadId);
                 Threads.Add(newThread);
             }
 
@@ -38,7 +35,7 @@ namespace Tracer
             string? MethodName = frame?.GetMethod()?.Name;
             string? ClassName = frame?.GetMethod()?.DeclaringType?.Name;
 
-            MethodInfo methodInfo = new MethodInfo (MethodName, ClassName);
+            MethodInfo methodInfo = new MethodInfo(MethodName, ClassName);
 
             Threads[threadId].Stack.Push(methodInfo);
             Threads[threadId].Methods.Add(methodInfo);
@@ -48,21 +45,45 @@ namespace Tracer
         }
         public void StopTrace()
         {
-            //Stopwatch.Stop();
+            int threadId = Thread.CurrentThread.ManagedThreadId;
 
-            //TraceResult.ExecutionTime = Stopwatch.Elapsed.TotalMilliseconds.ToString();
+            var threadInfo = Threads.FirstOrDefault(t => t.Id == threadId);
 
+            var methodInfo = threadInfo.Stack.Pop();
+
+            methodInfo.Stopwatch.Stop();
+
+            methodInfo.ExecutionTime = methodInfo.Stopwatch.Elapsed;
         }
 
-        void GetInformation()
+        public TraceResult GetTraceResult()
         {
+            var ResultThreads = new List<ThreadInfo>();
 
+            foreach (var threadInfo in Threads)
+            {
+                var time = threadInfo.Methods.Sum(MethodInfo => CalcTotalTime(MethodInfo).Milliseconds);
+                ResultThreads.Add(new ThreadInfo(threadInfo.Id, $"{time}ms"));
+            }
+            return new TraceResult(ResultThreads);
+
+
+            TimeSpan CalcTotalTime(MethodInfo method)
+            {
+                TimeSpan time = TimeSpan.Zero;
+
+                if (method.Methods.Count != 0)
+                {
+                    foreach (var methodInfo in method.Methods)
+                    {
+                        time += CalcTotalTime(methodInfo);
+                    }
+                }
+
+                time += method.ExecutionTime;
+
+                return time;
+            }
         }
-
-        public TraceResult GetTraceResult() 
-        {
-            return new TraceResult();
-        }
-
     }
 }

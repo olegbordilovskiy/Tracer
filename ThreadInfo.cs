@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -9,11 +10,16 @@ namespace Tracer
 {
     public class ThreadInfo
     {
+        [JsonProperty("id", Order = 1)]
         public int Id {  get; set; }
-        public string? Time { get; set; }
-        private Stopwatch Stopwatch { get; set; }
 
+        [JsonProperty("time", Order = 2)]
+        public string? Time { get; set; }
+
+        [JsonProperty("methods", Order = 3)]
         public List<MethodInfo> Methods;
+
+        [JsonIgnore]
         public Stack<MethodInfo> Stack;
 
         public ThreadInfo(int id)
@@ -24,11 +30,11 @@ namespace Tracer
             Stack = new Stack<MethodInfo>();
 
         }
-        public ThreadInfo(int id, string time) 
+        public ThreadInfo(int id, string time, List<MethodInfo> methods) 
         {
             Id = id;
             Time = time;
-            Methods = new List<MethodInfo>();
+            Methods = methods;
             Stack = new Stack<MethodInfo>();
 
         }

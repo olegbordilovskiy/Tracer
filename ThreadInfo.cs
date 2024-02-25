@@ -5,22 +5,31 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace Tracer
 {
+    [XmlType("thread")]
     public class ThreadInfo
     {
+
         [JsonProperty("id", Order = 1)]
+        [XmlAttribute("id")]
         public int Id {  get; set; }
 
         [JsonProperty("time", Order = 2)]
+        [XmlAttribute("time")]
         public string? Time { get; set; }
 
         [JsonProperty("methods", Order = 3)]
-        public List<MethodInfo> Methods;
+        [XmlElement("method")]
+        public List<MethodInfo> Methods { get; set; }
 
         [JsonIgnore]
-        public Stack<MethodInfo> Stack;
+        [XmlIgnore]
+        public Stack<MethodInfo> Stack { get; set; }
+
+        public ThreadInfo() { }
 
         public ThreadInfo(int id)
         {
@@ -38,6 +47,5 @@ namespace Tracer
             Stack = new Stack<MethodInfo>();
 
         }
-
     }
 }

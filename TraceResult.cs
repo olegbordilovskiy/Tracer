@@ -63,5 +63,6 @@ namespace Tracer
             ResultOutput.FileOutput(SerializeToJSON(), path); 
         }
 
+
     }
 }

@@ -9,6 +9,6 @@ namespace Tracer.Interfaces
     public interface IResultOutput
     {
         void ConsoleOutput(string result);
-        Task FileOutput(string result, string path);
+        void FileOutput(string result, string path);
     }
 }

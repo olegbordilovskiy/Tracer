@@ -15,10 +15,10 @@ namespace Tracer
     [XmlRoot("root")]
     public class TraceResult : ISerializer
     {
-        private IResultOutput ResultOutput { get; set; }
+        private IResultOutput ResultOutput { get; }
 
         [XmlElement("thread")]
-        public List<ThreadInfo> Threads { get; set; }
+        public List<ThreadInfo> Threads { get; }
         public TraceResult(List<ThreadInfo> threadsInfo, IResultOutput resultOutput)
         {
             Threads = threadsInfo;
@@ -58,9 +58,9 @@ namespace Tracer
             ResultOutput.ConsoleOutput(SerializeToJSON()); 
         }
 
-        public async Task OutputToFile(string path)
+        public void OutputToFile(string path)
         {
-            await ResultOutput.FileOutput(SerializeToJSON(), path); 
+            ResultOutput.FileOutput(SerializeToJSON(), path); 
         }
 
     }

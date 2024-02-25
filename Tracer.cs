@@ -12,8 +12,9 @@ namespace Tracer
 {
     public class Tracer : ITracer
     {
-        private List<ThreadInfo> Threads;
+        private List<ThreadInfo> Threads { get; set; }
         private IResultOutput ResultOutput;
+        private readonly object _lockObj = new();
 
         public Tracer(IResultOutput resultOutput)
         {
@@ -22,47 +23,53 @@ namespace Tracer
         }
         public void StartTrace()
         {
-            int threadId = Thread.CurrentThread.ManagedThreadId;
-
-            var threadInfo = Threads.FirstOrDefault(t => t.Id == threadId);
-
-            if (threadInfo == null)
+            lock (_lockObj)
             {
-                threadInfo = new ThreadInfo(threadId);
-                Threads.Add(threadInfo);
+                int threadId = Thread.CurrentThread.ManagedThreadId;
+
+                var threadInfo = Threads.FirstOrDefault(t => t.Id == threadId);
+
+                if (threadInfo == null)
+                {
+                    threadInfo = new ThreadInfo(threadId);
+                    Threads.Add(threadInfo);
+                }
+
+                StackTrace stackTrace = new StackTrace();
+                StackFrame? frame = stackTrace.GetFrame(1);
+
+                string? MethodName = frame?.GetMethod()?.Name;
+                string? ClassName = frame?.GetMethod()?.DeclaringType?.Name;
+
+                MethodInfo methodInfo = new MethodInfo(MethodName, ClassName);
+
+
+                if (threadInfo?.Stack.Count == 0)
+
+                    threadInfo.Methods.Add(methodInfo);
+
+                else
+                    threadInfo?.Stack.Peek().Methods.Add(methodInfo);
+
+                threadInfo?.Stack.Push(methodInfo);
+                methodInfo.Stopwatch.Start();
             }
-
-            StackTrace stackTrace = new StackTrace();
-            StackFrame? frame = stackTrace.GetFrame(1);
-
-            string? MethodName = frame?.GetMethod()?.Name;
-            string? ClassName = frame?.GetMethod()?.DeclaringType?.Name;
-
-            MethodInfo methodInfo = new MethodInfo(MethodName, ClassName);
-
-
-            if (threadInfo?.Stack.Count == 0)
-
-                threadInfo.Methods.Add(methodInfo);
-
-            else
-                threadInfo?.Stack.Peek().Methods.Add(methodInfo);
-
-            threadInfo?.Stack.Push(methodInfo);
-            methodInfo.Stopwatch.Start();
 
         }
         public void StopTrace()
         {
-            int threadId = Thread.CurrentThread.ManagedThreadId;
+            lock (_lockObj)
+            {
+                int threadId = Thread.CurrentThread.ManagedThreadId;
 
-            var threadInfo = Threads.FirstOrDefault(t => t.Id == threadId);
+                var threadInfo = Threads.FirstOrDefault(t => t.Id == threadId);
 
-            var methodInfo = threadInfo.Stack.Pop();
+                var methodInfo = threadInfo.Stack.Pop();
 
-            methodInfo.Stopwatch.Stop();
+                methodInfo.Stopwatch.Stop();
 
-            methodInfo.ExecutionTime = methodInfo.Stopwatch.Elapsed.TotalMilliseconds;
+                methodInfo.ExecutionTime = methodInfo.Stopwatch.Elapsed.TotalMilliseconds;
+            }
         }
 
         public TraceResult GetTraceResult()

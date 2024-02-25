@@ -14,13 +14,13 @@ namespace Tracer
             Console.WriteLine(result);
         }
 
-        public async Task FileOutput(string result, string path)
+        public void FileOutput(string result, string path)
         {
             try
             {
                 using (StreamWriter sw = new StreamWriter(path, false))
                 {
-                    await sw.WriteAsync(result);
+                    sw.WriteAsync(result);
                 }
             }
             catch (Exception ex)

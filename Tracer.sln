@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tracer", "Tracer.csproj", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demonstration", "..\Demonstration\Demonstration\Demonstration.csproj", "{F098CD60-FC78-4394-ABF9-F6C969CBEEFC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "xNUnit Tests", "..\xNUnit Tests\xNUnit Tests.csproj", "{4F8713F3-8BE3-4285-BF6D-3EED3C87E8D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "xNUnit Tests", "..\xNUnit Tests\xNUnit Tests.csproj", "{4F8713F3-8BE3-4285-BF6D-3EED3C87E8D8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

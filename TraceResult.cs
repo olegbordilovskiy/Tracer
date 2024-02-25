@@ -29,7 +29,7 @@ namespace Tracer
 
         public string SerializeToJSON()
         {
-            return JsonConvert.SerializeObject(this);
+            return JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
         }
 
         public string SerializeToXML()

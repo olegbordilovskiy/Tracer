@@ -5,7 +5,9 @@ VisualStudioVersion = 17.8.34408.163
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tracer", "Tracer.csproj", "{CED05D41-1C24-4242-8EDE-254AE2A5DA1A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demonstration", "..\Demonstration\Demonstration\Demonstration.csproj", "{F098CD60-FC78-4394-ABF9-F6C969CBEEFC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demonstration", "..\Demonstration\Demonstration\Demonstration.csproj", "{F098CD60-FC78-4394-ABF9-F6C969CBEEFC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "xNUnit Tests", "..\xNUnit Tests\xNUnit Tests.csproj", "{4F8713F3-8BE3-4285-BF6D-3EED3C87E8D8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{F098CD60-FC78-4394-ABF9-F6C969CBEEFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F098CD60-FC78-4394-ABF9-F6C969CBEEFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F098CD60-FC78-4394-ABF9-F6C969CBEEFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F8713F3-8BE3-4285-BF6D-3EED3C87E8D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F8713F3-8BE3-4285-BF6D-3EED3C87E8D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F8713F3-8BE3-4285-BF6D-3EED3C87E8D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F8713F3-8BE3-4285-BF6D-3EED3C87E8D8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

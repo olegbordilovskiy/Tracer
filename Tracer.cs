@@ -68,7 +68,7 @@ namespace Tracer
 
                 methodInfo.Stopwatch.Stop();
 
-                methodInfo.ExecutionTime = methodInfo.Stopwatch.Elapsed.TotalMilliseconds;
+                methodInfo.ExecutionTime = Math.Round(methodInfo.Stopwatch.Elapsed.TotalMilliseconds).ToString() + "ms";
             }
         }
 
@@ -96,7 +96,7 @@ namespace Tracer
                     }
                 }
 
-                time += method.ExecutionTime;
+                time += double.Parse(method.ExecutionTime?.TrimEnd(['m', 's']) ?? "0");
 
                 return time;
             }

@@ -22,7 +22,8 @@ namespace Tracer
 
         [JsonProperty("time")]
         [XmlAttribute("time")]
-        public double ExecutionTime { get; set; }
+        //public double ExecutionTime { get; set; }
+        public string ExecutionTime { get; set; }
 
         [JsonIgnore]
         [XmlIgnore]
